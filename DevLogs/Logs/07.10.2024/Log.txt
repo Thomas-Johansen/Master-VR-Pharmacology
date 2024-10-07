@@ -6,3 +6,8 @@ Programmet koster 20 000 i året.
 De har studentlisens, så lastet det ned.
 Modellen fungerer bedre i Max. 
 Men er nytt programm, som betyr nytt interface å lære seg.
+
+
+https://docs.unity3d.com/Packages/com.unity.formats.fbx@5.1/manual/integration-3ds-max-roundtrip.html
+
+Fbx Exporter unity tool -> Krevde nyere unity versjon
