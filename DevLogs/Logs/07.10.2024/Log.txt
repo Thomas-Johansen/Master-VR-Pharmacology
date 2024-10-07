@@ -1,0 +1,8 @@
+﻿Frem til nå -> Prøvd å bruke addon i blender for å convertere model
+Mixed resultater. Kroppsdeler havner på feil steder etc.
+
+Modeller er egentlig beregnet for Autodesk 3ds Max
+Programmet koster 20 000 i året. 
+De har studentlisens, så lastet det ned.
+Modellen fungerer bedre i Max. 
+Men er nytt programm, som betyr nytt interface å lære seg.
