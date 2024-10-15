@@ -1,0 +1,6 @@
+﻿Since last time:
+Gotten the lung model to import properly in both blender and 3ds max.
+3ds max was more willing to cooperate with the .obj file instead of the older 3ds max file format
+Changed project unity to Unity 6 to make use of never package versions.
+Might go for a 2023 version instead, we'll see.
+Discussion of usability of crossection of model
