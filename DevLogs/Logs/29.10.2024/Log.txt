@@ -5,6 +5,6 @@ God blanning av norsk og engelsk i denne loggen.
 
 1. Fikse oppløsning på texturen i unity - Done, måtte bare endre hvor stor oppløsning unity brukte i material instilling
 2. Environemnt basics - Flytt rundt på modellen for å plassere den på korrekt sted etc.
-3. Gas cloud particle sim - to simulate the medicine
+3. Gas cloud particle sim - to simulate the medicine - https://www.youtube.com/watch?v=wAGWGSjLsDQ
 4. Show text on hover / Get the basic floating text up and running
 5. Manipulating the model to show the inflamation

@@ -9,8 +9,8 @@
         "HideSendToUnityMenu": true,
         "BakeAnimation": false,
         "showConvertToPrefabDialog": true,
-        "integrationSavePath": "D:/Koding/Unity/Master/Integration",
-        "selectedDCCApp": 0,
+        "integrationSavePath": "D:/Koding/Unity/Master/Integration/Integrations",
+        "selectedDCCApp": 1,
         "prefabSavePaths": [
             "Models/Prefab",
             "."
@@ -22,10 +22,12 @@
         "selectedFbxPath": 0,
         "selectedPrefabPath": 0,
         "dccOptionNames": [
-            "3ds Max 2025"
+            "3ds Max 2025",
+            "3ds Max 2023"
         ],
         "dccOptionPaths": [
-            "C:/Program Files/Autodesk/3ds Max 2025/3dsmax.exe"
+            "C:/Program Files/Autodesk/3ds Max 2025/3dsmax.exe",
+            "C:/Program Files/Autodesk/3ds Max 2023/3dsmax.exe"
         ],
         "exportModelSettingsSerialize": {
             "exportFormat": 0,
@@ -34,8 +36,8 @@
             "include": 2,
             "lodLevel": 0,
             "objectPosition": 0,
-            "exportUnrendered": true,
-            "preserveImportSettings": false,
+            "exportUnrendered": false,
+            "preserveImportSettings": true,
             "keepInstances": true,
             "embedTextures": true
         },
