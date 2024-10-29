@@ -1,0 +1,48 @@
+{
+    "MonoBehaviour": {
+        "m_Enabled": true,
+        "m_EditorHideFlags": 0,
+        "m_Name": "FBX Export Settings",
+        "m_EditorClassIdentifier": "",
+        "Verbose": false,
+        "launchAfterInstallation": true,
+        "HideSendToUnityMenu": true,
+        "BakeAnimation": false,
+        "showConvertToPrefabDialog": true,
+        "integrationSavePath": "D:/Koding/Unity/Master/Integration",
+        "selectedDCCApp": 0,
+        "prefabSavePaths": [
+            "Models/Prefab",
+            "."
+        ],
+        "fbxSavePaths": [
+            "Models/Export",
+            "."
+        ],
+        "selectedFbxPath": 0,
+        "selectedPrefabPath": 0,
+        "dccOptionNames": [
+            "3ds Max 2025"
+        ],
+        "dccOptionPaths": [
+            "C:/Program Files/Autodesk/3ds Max 2025/3dsmax.exe"
+        ],
+        "exportModelSettingsSerialize": {
+            "exportFormat": 0,
+            "animatedSkinnedMesh": false,
+            "mayaCompatibleNaming": true,
+            "include": 2,
+            "lodLevel": 0,
+            "objectPosition": 0,
+            "exportUnrendered": true,
+            "preserveImportSettings": false,
+            "keepInstances": true,
+            "embedTextures": true
+        },
+        "convertToPrefabSettingsSerialize": {
+            "exportFormat": 0,
+            "animatedSkinnedMesh": false,
+            "mayaCompatibleNaming": true
+        }
+    }
+}

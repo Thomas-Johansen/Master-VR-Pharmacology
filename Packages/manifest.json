@@ -1,10 +1,10 @@
 {
   "dependencies": {
-    "com.unity.collab-proxy": "2.5.1",
+    "com.unity.collab-proxy": "2.5.2",
     "com.unity.feature.development": "1.0.2",
     "com.unity.feature.vr": "1.0.1",
     "com.unity.formats.fbx": "5.1.1",
-    "com.unity.inputsystem": "1.11.0",
+    "com.unity.inputsystem": "1.11.1",
     "com.unity.learn.iet-framework": "4.0.2",
     "com.unity.multiplayer.center": "1.0.0",
     "com.unity.render-pipelines.universal": "17.0.3",
