@@ -1,3 +1,4 @@
 ﻿Visual effect graph / smoke effect work
 https://www.youtube.com/watch?v=sNJ_SU20-o0&list=PLtRuo28h-g1mndib2hMyp-dVfx7Jq9cOH&index=1
 https://learn.unity.com/tutorial/introduction-to-particle-systems#6025fdd9edbc2a112d4f0135
+https://unity.com/blog/engine-platform/free-vfx-image-sequences-flipbooks
