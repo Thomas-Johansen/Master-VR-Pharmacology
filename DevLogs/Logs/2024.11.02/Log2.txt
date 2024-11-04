@@ -1,0 +1,4 @@
+﻿https://docs.unity3d.com/Manual/BlendShapes.html
+https://docs.blender.org/manual/en/latest/animation/shape_keys/introduction.html
+
+First itteration of star shape astma attack animation
