@@ -1,0 +1,12 @@
+﻿Mostly blender related work over the last month.
+Modeled cells for later use.
+New technical supervisors innvolved, loots of good ideas pingponged back and forth.
+New focus, make custom model for end-cap of crossection model, and create custom shader graph based material to enable dynamic manipulation of the texture.
+Made the model in blender, using shape keys / blend keys to move vertices in unity.
+    Vertices are a *****....
+    Unity only supports 3 edge, maybe 4, had to trangulate. Manually
+    
+    
+In unity: 
+    https://docs.unity3d.com/6000.0/Documentation/Manual/shader-graph.html
+    https://discussions.unity.com/t/solved-length-node-doesnot-work/766792/2
