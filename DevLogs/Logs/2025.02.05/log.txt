@@ -1,0 +1,22 @@
+﻿TODO:
+
+    NavMesh: for å simulere celler som dukker opp etter hvert som luftrøret lukker seg
+    Belysning: trenger ikke være perfekt, men må prøve å få forbedret noe ihvertfall
+    Revisit smoke sim: Integrate that particles/medicine from the smoke move out in the layers and make the cells go away
+    Start work on "controlls": Replace current controlls with more "Scenario" managed movement
+        The player will mostly be kept in the same spot, and will be moved by app when nessessary
+        Possibly do intro scenario? Start outside body and go inside
+        Do Research on how to "queue" up events
+        But big buttons in game that control the animation of the cross-section.
+    Sound Design: Look into how to do sound events and get sound files that will work.
+    
+    After this: Moving into the model
+    
+    PUT IT ALL TOGETHER! (Not yet though, but like thats the goal you know) 
+    
+    
+
+
+Execution:
+    NavMesh: Add "AI Navigation" package to unity
+        Not as in OpenAI, but the old-fashioned type.
