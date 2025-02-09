@@ -15,8 +15,12 @@
     PUT IT ALL TOGETHER! (Not yet though, but like thats the goal you know) 
     
     
-
+Thoughts:
+    Pure AR version for student use?
 
 Execution:
     NavMesh: Add "AI Navigation" package to unity
+            https://discussions.unity.com/t/a-guide-on-using-the-new-ai-navigation-package-in-unity-2022-lts-and-above/371872
+            https://docs.unity3d.com/6000.0/Documentation/ScriptReference/AI.NavMesh.html
         Not as in OpenAI, but the old-fashioned type.
+        Fighting with model over what way is up to apply navmesh to correct surface
