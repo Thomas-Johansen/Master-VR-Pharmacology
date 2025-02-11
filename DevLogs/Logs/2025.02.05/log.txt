@@ -17,6 +17,8 @@
     
 Thoughts:
     Pure AR version for student use?
+    
+    BIG IDEA: USE NAVMESH TO HAVE PARTICLES HIT CELLS,
 
 Execution:
     NavMesh: Add "AI Navigation" package to unity
