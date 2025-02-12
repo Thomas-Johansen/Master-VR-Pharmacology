@@ -8,6 +8,7 @@
         Possibly do intro scenario? Start outside body and go inside
         Do Research on how to "queue" up events
         But big buttons in game that control the animation of the cross-section.
+    Point and tell feature
     Sound Design: Look into how to do sound events and get sound files that will work.
     
     After this: Moving into the model
@@ -26,3 +27,6 @@ Execution:
             https://docs.unity3d.com/6000.0/Documentation/ScriptReference/AI.NavMesh.html
         Not as in OpenAI, but the old-fashioned type.
         Fighting with model over what way is up to apply navmesh to correct surface
+        Navmesh works, also accounts for rotation.
+        Tested agents, seems to be working nicely
+        Imported cells to replace sphere agent
