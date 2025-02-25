@@ -596,6 +596,7 @@ Transform:
   m_Children:
   - {fileID: 1205328365}
   - {fileID: 980781542}
+  - {fileID: 903793749}
   - {fileID: 1986389745}
   - {fileID: 546545749}
   - {fileID: 238072717}
@@ -2700,6 +2701,61 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &903793748
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 903793749}
+  - component: {fileID: 903793750}
+  m_Layer: 0
+  m_Name: CellController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &903793749
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 903793748}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 243910621}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &903793750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 903793748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baaf8b6027c7bd548865749cd587e3c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cellPrefab: {fileID: 0}
+  cellPrefab2: {fileID: 0}
+  cells: []
+  cellCount: 0
+  stage: 0
+  agent: {fileID: 0}
+  parentLocation: {fileID: 0}
+  centerPoint: {fileID: 0}
+  edgePoint: {fileID: 0}
+  innerRadi: 0
+  sharedTimingData: {fileID: 11400000, guid: 72d37695e1bf00040a224aad80017279, type: 2}
 --- !u!1 &917981741 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: d799577d47e9a2d4dbc036c5fc33e391, type: 3}
@@ -2892,7 +2948,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &980781542
 Transform:
   m_ObjectHideFlags: 0
@@ -6266,9 +6322,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skinnedMeshRenderer: {fileID: 1941425830}
   blendShapeIndex: 0
-  targetRenderer: {fileID: 0}
-  materialProperty: 
-  maxMaterialValue: 1
+  maxMuscleValue: 0.23
+  maxTissueValue: 1
+  sharedTimingData: {fileID: 11400000, guid: 72d37695e1bf00040a224aad80017279, type: 2}
 --- !u!137 &1941425830 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: -3887185075125053422, guid: 67b4c7a61356f574a92ee6643a1a0cdb, type: 3}

@@ -11,7 +11,8 @@
     Point and tell feature
     Sound Design: Look into how to do sound events and get sound files that will work.
     
-    After this: Moving into the model
+    After this: Moving into the model?
+    Add as "Further work" type thing in thesis
     
     PUT IT ALL TOGETHER! (Not yet though, but like thats the goal you know) 
     
@@ -19,7 +20,8 @@
 Thoughts:
     Pure AR version for student use?
     
-    BIG IDEA: USE NAVMESH TO HAVE PARTICLES HIT CELLS,
+    BIG IDEA: USE NAVMESH TO HAVE PARTICLES HIT CELLS, making use of stored cell positions
+        Actually make particles, using small scale smoke sim or glowing particle?
 
 Execution:
     NavMesh: Add "AI Navigation" package to unity
@@ -30,3 +32,8 @@ Execution:
         Navmesh works, also accounts for rotation.
         Tested agents, seems to be working nicely
         Imported cells to replace sphere agent
+        Added constraints to navmesh
+        Scriptwork to coordinate movement between cells and crossection
+            https://docs.unity3d.com/6000.0/Documentation/ScriptReference/MonoBehaviour.html'
+            https://docs.unity3d.com/Manual/class-ScriptableObject.html
+        
