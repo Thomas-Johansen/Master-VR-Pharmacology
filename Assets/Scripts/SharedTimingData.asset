@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d536e0be26123e479e695fb6861a2d6, type: 3}
   m_Name: SharedTimingData
   m_EditorClassIdentifier: 
-  speed: 1
-  time: 12.52422
-  stage: 1
+  Speed: 1
+  Time: 73.71787
+  Stage: 7
+  Contraction: -0.000000005689799

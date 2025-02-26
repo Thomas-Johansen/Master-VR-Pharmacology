@@ -14,15 +14,15 @@ public class SharedTimingData : ScriptableObject
     /// and interval between cells "spawning".
     /// Might end up affecting cell speed
     /// </summary>
-    public float speed = 1.0f; 
+    public float Speed = 1.0f; 
     /// <summary>
     /// The elapsed time used for timing mechanisms.
     /// </summary>
-    public float time = 0; 
+    public float Time = 0; 
     /// <summary>
     /// Which stage of the animation we are at.
     /// </summary>
-    public int stage = 1;
+    public int Stage = 1;
     /*
      * Stages of animation:
      *  Stage1: The muscle layer contracts
@@ -35,11 +35,18 @@ public class SharedTimingData : ScriptableObject
      * Stage 6: Quick acting medicine makes the muscle layer expand/return to original size.
      * Stage 7: Cells go away over time and tissue layer calms down.
      */
+    
+    /// <summary>
+    /// Float from 0 to 1 that represents how contracted the shader and model for crossection is
+    /// </summary>
+    public float Contraction = 0;
+    
 
     void OnEnable()
     {
-        speed = 1.0f;
-        time = 0.0f;
-        stage = 1; //Set to 0 here so we can start the animation at a spesific point from somewhere else
+        Speed = 1.0f;
+        Time = 0.0f;
+        Stage = 1; //Set to 0 here so we can start the animation at a spesific point from somewhere else
+        Contraction = 0;
     }
 }
