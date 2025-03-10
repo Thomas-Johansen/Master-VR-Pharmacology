@@ -22,6 +22,8 @@ Thoughts:
     
     BIG IDEA: USE NAVMESH TO HAVE PARTICLES HIT CELLS, making use of stored cell positions
         Actually make particles, using small scale smoke sim or glowing particle?
+        
+    Have medicine generation as a side taks for better optimalization?
 
 Execution:
     NavMesh: Add "AI Navigation" package to unity
