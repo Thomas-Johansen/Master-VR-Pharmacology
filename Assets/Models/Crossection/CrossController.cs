@@ -13,6 +13,7 @@ public class CrossController : MonoBehaviour
     
     //Timing variables
     public SharedTimingData sharedTimingData;
+    
     /*
      * Stages of animation:
      *  Stage1: The muscle layer contracts
