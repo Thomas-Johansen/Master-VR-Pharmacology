@@ -1,0 +1,21 @@
+﻿Coroutines
+https://learn.unity.com/tutorial/coroutines#
+https://docs.unity3d.com/6000.0/Documentation/Manual/coroutines.html
+https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Coroutine.html
+
+How many med particles to spawn at a time?
+How many per frame
+How many to preload?
+
+FOR NOW:
+    Generate particle, on generation, assign target cell.
+    When activation particle, check if cell is still active.
+        If not, don't enable
+        If active, activate particle to move to cell.
+        
+OR : Generate object without spesific target, mostly just to store own gameobject and cell.
+    Set target cell and agent on enable
+    
+    Seems more efficent, no?
+    Less wasted cells.
+    Buuuut, more processing on spawn then if target is pregenerated.

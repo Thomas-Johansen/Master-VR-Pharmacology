@@ -26,9 +26,9 @@ public class CellController : MonoBehaviour
     public GameObject medPrefab;
     public GameObject medPrefab2;
     
-    public List<CellData> meds = new List<CellData>();
+    public List<MedData> meds = new List<MedData>();
     private float _timestamp = 0;
-    private bool _hasSpawned = false;
+    private int _hasSpawned = 0;
     private int _removeIndex = 0;
     
     
@@ -96,7 +96,15 @@ public class CellController : MonoBehaviour
 
                 if (cells.Count < 10 && _individualCellTimer >= 2)
                 {
-                    SpawnNewCell1();
+                    int rand = UnityEngine.Random.Range(0, 2);
+                    if (rand == 1)
+                    {
+                        SpawnNewCell1();
+                    }
+                    else
+                    {
+                        SpawnNewCell2();
+                    }
                     _individualCellTimer = 0;
                 }
                 else if (cells.Count == 10)
@@ -127,7 +135,15 @@ public class CellController : MonoBehaviour
                 // Cell Spawning
                 if (cells.Count < 30 && _individualCellTimer >= 2)
                 {
-                    SpawnNewCell2();
+                    int rand = UnityEngine.Random.Range(0, 2);
+                    if (rand == 1)
+                    {
+                        SpawnNewCell1();
+                    }
+                    else
+                    {
+                        SpawnNewCell2();
+                    }
                     _individualCellTimer = 0;
                 }
                 else if (cells.Count == 30)
@@ -141,10 +157,12 @@ public class CellController : MonoBehaviour
                 sharedTimingData.Time += (Time.deltaTime * sharedTimingData.Speed);
                 if (sharedTimingData.Time >= 80f)
                 {
-                    CellLayer.SetActive(false);
                     MedLayer.SetActive(true);
+                    //CellLayer.SetActive(false); //TODO: Mention this issue? Revisit? 
                     obstacle.SetActive(false);
+                    _individualCellTimer = 0;
                     sharedTimingData.Stage = 5;
+                    
                 }
                 break;
 
@@ -155,23 +173,42 @@ public class CellController : MonoBehaviour
                 sharedTimingData.Time += (Time.deltaTime * sharedTimingData.Speed);
                 _individualCellTimer += (Time.deltaTime * sharedTimingData.Speed);
 
-                if (_hasSpawned == false)
+                if (_hasSpawned == 0)
                 {
                     foreach (CellData cell in cells)
                     {
                         SpawnNewMed1(cell);
                     }
-                    _hasSpawned = true;
+                    _hasSpawned = 1;
+                }
+
+                if (sharedTimingData.Time >= 85 && _hasSpawned == 1)
+                {
+                    foreach (CellData cell in cells)
+                    {
+                        SpawnNewMed1(cell);
+                    }
+                    _hasSpawned = 2;
+                }
+                if (sharedTimingData.Time >= 90 && _hasSpawned == 2)
+                {
+                    foreach (CellData cell in cells)
+                    {
+                        SpawnNewMed1(cell);
+                    }
+                    _hasSpawned = 3;
                 }
 
                 if (sharedTimingData.Time >= 100)
                 {
                     sharedTimingData.Stage = 6;
                     _individualCellTimer = 0;
-                    foreach (CellData medCell in meds)
+                    /*
+                    foreach (MedData medCell in meds)
                     {
-                        medCell.cell.SetActive(false);
+                        medCell.particle.SetActive(false);
                     }
+                    */
                 }
                 break;
             case 7:
@@ -180,7 +217,16 @@ public class CellController : MonoBehaviour
 
                 if (_individualCellTimer > 1 && _removeIndex < cells.Count)
                 {
-                    cells[_removeIndex].cell.SetActive(false);
+                    CellData cell = cells[_removeIndex];
+                    cell.cell.SetActive(false);
+                    foreach (MedData med in meds)
+                    {
+                        if (med.target == cell.cell)
+                        {
+                            med.particle.SetActive(false);
+                        }
+                    }
+                    //cells[_removeIndex].cell.SetActive(false);
                     _individualCellTimer = 0;
                     _removeIndex++;
                 }
@@ -220,7 +266,7 @@ public class CellController : MonoBehaviour
         NavMeshAgent agent = newCell.GetComponent<NavMeshAgent>();
         newCell.name = "MedVariant1_Number_" + cellCount;
         agent.SetDestination(targetCell.agent.transform.position);
-        meds.Add(new CellData(newCell, agent));
+        meds.Add(new MedData(newCell, agent, targetCell.cell));
         medCount++;
     }
     
@@ -271,4 +317,27 @@ public struct CellData
         cell = gameObject;
         agent = navMeshAgent;
     }
+}
+
+/// <summary>
+/// Paris a cell object with its navmeshagent to avoid having to use getcomponent
+/// Med need to eventually keep track of which cell the med is bound to
+/// </summary>
+[System.Serializable]
+public struct MedData
+{
+    public GameObject particle;
+    public NavMeshAgent agent;
+    public GameObject target;
+    public int canActivate;
+    
+    public MedData(GameObject gameObject, NavMeshAgent navMeshAgent, GameObject cell)
+    {
+        particle = gameObject;
+        agent = navMeshAgent;
+        target = cell;
+        canActivate = 1;
+    }
+    
+    public void DeActivate(){canActivate = 0;}
 }
