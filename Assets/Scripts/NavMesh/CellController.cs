@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Unity.Mathematics.Geometry;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.VFX;
 
 /// <summary>
 /// This Script is the main controller for spawning and controlling the cells on the navmesh
@@ -23,13 +24,15 @@ public class CellController : MonoBehaviour
     public int medCount;
     
     //Med Variables
+    public GameObject particelSpawner;
+    private VisualEffect _smokeEffect;
     public GameObject medPrefab;
     public GameObject medPrefab2;
     
     public List<MedData> meds = new List<MedData>();
     private float _timestamp = 0;
-    private int _hasSpawned = 0;
-    private int _removeIndex = 0;
+    private int _particleBool = 0;
+    private int _smokeBool = 0;
     
     
     
@@ -53,6 +56,8 @@ public class CellController : MonoBehaviour
     //Timing variables
     public SharedTimingData sharedTimingData;
     private float _individualCellTimer;
+    private float _individualMedTimer;
+    private float _cellTimeRatio;
     
     /*
      * Stages of animation:
@@ -81,6 +86,15 @@ public class CellController : MonoBehaviour
         minRadius = min_minRadius;
         
         obstacle.transform.localScale = new Vector3(obstacleRadius1, obstacleRadius1, obstacleRadius1);
+
+        _individualCellTimer = 0;
+        _individualMedTimer = 0;
+        _cellTimeRatio = 1;
+        
+        
+        //Particle effect
+        _smokeEffect = particelSpawner.GetComponent<VisualEffect>();
+        _smokeEffect.Stop();
     }
 
     // Update is called once per frame
@@ -89,12 +103,20 @@ public class CellController : MonoBehaviour
         
         switch (sharedTimingData.Stage)
         {
+            case 0: //Stage 0: Temp location? Pause/Talking time before animation starts.
+                _individualCellTimer += (Time.deltaTime * sharedTimingData.Speed);
+                if (_individualCellTimer >= 20)
+                {
+                    _individualCellTimer = 0;
+                    sharedTimingData.Stage = 1;
+                }
+                break;
             case 2:
                 // Stage 2: Some cells start to show up
                 sharedTimingData.Time += (Time.deltaTime * sharedTimingData.Speed); // Updates passed time for both cells and crossection
                 _individualCellTimer += (Time.deltaTime * sharedTimingData.Speed);
 
-                if (cells.Count < 10 && _individualCellTimer >= 2)
+                if (cells.Count < 15 && _individualCellTimer >= 2)
                 {
                     int rand = UnityEngine.Random.Range(0, 2);
                     if (rand == 1)
@@ -107,7 +129,7 @@ public class CellController : MonoBehaviour
                     }
                     _individualCellTimer = 0;
                 }
-                else if (cells.Count == 10)
+                else if (cells.Count == 15)
                 {
                     sharedTimingData.Stage = 3;
                 }
@@ -129,11 +151,12 @@ public class CellController : MonoBehaviour
                 }
                 else
                 {
-                    obstacle.SetActive(false); //TODO: COORDINATE BETWEEN THIS
+                    obstacle.SetActive(false); 
+                    sharedTimingData.Stage = 4; 
                 }
 
                 // Cell Spawning
-                if (cells.Count < 30 && _individualCellTimer >= 2)
+                if (cells.Count < 50 && _individualCellTimer >= 2)
                 {
                     int rand = UnityEngine.Random.Range(0, 2);
                     if (rand == 1)
@@ -146,16 +169,12 @@ public class CellController : MonoBehaviour
                     }
                     _individualCellTimer = 0;
                 }
-                else if (cells.Count == 30)
-                {
-                    sharedTimingData.Stage = 4; //TODO: AND THIS
-                }
                 break;
 
             case 4:
                 // Stage 4: Time update only
                 sharedTimingData.Time += (Time.deltaTime * sharedTimingData.Speed);
-                if (sharedTimingData.Time >= 80f)
+                if (sharedTimingData.Time >= 100f)
                 {
                     MedLayer.SetActive(true);
                     //CellLayer.SetActive(false); //TODO: Mention this issue? Revisit? 
@@ -173,51 +192,51 @@ public class CellController : MonoBehaviour
                 sharedTimingData.Time += (Time.deltaTime * sharedTimingData.Speed);
                 _individualCellTimer += (Time.deltaTime * sharedTimingData.Speed);
 
-                if (_hasSpawned == 0)
+                if (_smokeBool == 0 && _individualCellTimer >= 3.25f)
                 {
-                    foreach (CellData cell in cells)
-                    {
-                        SpawnNewMed1(cell);
-                    }
-                    _hasSpawned = 1;
+                    _smokeEffect.Play();
+                    _smokeBool = 1;
                 }
 
-                if (sharedTimingData.Time >= 85 && _hasSpawned == 1)
+                if (_particleBool == 0 && _individualCellTimer >= 4f)
                 {
                     foreach (CellData cell in cells)
                     {
                         SpawnNewMed1(cell);
                     }
-                    _hasSpawned = 2;
+                    _particleBool = 1;
+                    _smokeEffect.Stop();
                 }
-                if (sharedTimingData.Time >= 90 && _hasSpawned == 2)
-                {
-                    foreach (CellData cell in cells)
-                    {
-                        SpawnNewMed1(cell);
-                    }
-                    _hasSpawned = 3;
-                }
-
-                if (sharedTimingData.Time >= 100)
+                if (sharedTimingData.Time >= 105)
                 {
                     sharedTimingData.Stage = 6;
                     _individualCellTimer = 0;
-                    /*
-                    foreach (MedData medCell in meds)
-                    {
-                        medCell.particle.SetActive(false);
-                    }
-                    */
+                    _smokeBool = 0;
+                    _cellTimeRatio = (28f / cellCount); //Devide time it should take on cells to go away. Maybe move to more centralized variable?
                 }
                 break;
-            case 7:
+            case 7: //TODO: REMOVE BASED ON DISTANCE FROM CENTER
                 sharedTimingData.Time += (Time.deltaTime * sharedTimingData.Speed);
                 _individualCellTimer += (Time.deltaTime * sharedTimingData.Speed);
+                _individualMedTimer += (Time.deltaTime * sharedTimingData.Speed);
 
-                if (_individualCellTimer > 1 && _removeIndex < cells.Count)
+                if (_individualCellTimer > _cellTimeRatio && cells.Count > 0)
                 {
-                    CellData cell = cells[_removeIndex];
+                    //Removes cell closest to center to avoid "floating" cells
+                    CellData cell = cells[0];
+                    float distance = 1000f; //Just a bigger number than max distance to a cell
+                    foreach (CellData thisCell in cells)
+                    {
+                        if (thisCell.cell.activeSelf)
+                        {
+                            float thisDistance = Vector3.Distance(centerPoint.position, thisCell.cell.transform.position);
+                            if (thisDistance < distance)
+                            {
+                                cell = thisCell;
+                                distance = thisDistance;
+                            }
+                        }
+                    }
                     cell.cell.SetActive(false);
                     foreach (MedData med in meds)
                     {
@@ -226,9 +245,32 @@ public class CellController : MonoBehaviour
                             med.particle.SetActive(false);
                         }
                     }
-                    //cells[_removeIndex].cell.SetActive(false);
                     _individualCellTimer = 0;
-                    _removeIndex++;
+                }
+                
+                if (_smokeBool == 0 && _individualMedTimer >= 3.25f)
+                {
+                    _smokeEffect.Play();
+                    _smokeBool = 1;
+                }
+
+                if (_individualMedTimer >= 4f && _particleBool < 7)
+                {
+                    _individualMedTimer = 0;
+                    _smokeBool = 0;
+                    _smokeEffect.Stop();
+                    _particleBool++;
+                    foreach (CellData cell in cells)
+                    {
+                        if (!cell.cell.activeSelf)
+                        {
+                            continue;
+                        }
+                        SpawnNewMed1(cell);
+                    }
+                } else if (_particleBool == 7 && _individualMedTimer >= 4f)
+                {
+                    _smokeEffect.Stop();
                 }
 
                 break;

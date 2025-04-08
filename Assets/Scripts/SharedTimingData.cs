@@ -44,9 +44,9 @@ public class SharedTimingData : ScriptableObject
 
     void OnEnable()
     {
-        Speed = 2.0f;
+        Speed = 1.0f;
         Time = 0.0f;
-        Stage = 1; //Set to 0 here so we can start the animation at a spesific point from somewhere else
+        Stage = 0; //Set to 0 here so we can start the animation at a spesific point from somewhere else
         Contraction = 0;
     }
 }

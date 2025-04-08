@@ -1,0 +1,21 @@
+﻿
+Plan for tomorrow:
+
+SOUND - Missing files
+    https://29a.ch/noise-generator/
+    (NOTE TO SELF: HAVE VOICE OVERS COMING FROM LEFT AND RIGHT)
+PARTICLE -/-
+SLIME
+
+Extra cells that start and stay
+Extra med that just kinda do their thing?
+
+
+LOCOMOTION
+Scenario: Two buttons:
+    Stop treatment
+        See sped up version of getting worse?
+        Loops back to question of what to do
+    Continue Treatment
+        Loop of some cells spawning, then taking medicine.
+    

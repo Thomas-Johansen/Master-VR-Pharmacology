@@ -48,12 +48,14 @@ public class CrossController : MonoBehaviour
                 if (MuscleFloat < maxMuscleValue)
                 {
                     material.SetFloat("_MainSlider2", MuscleFloat);
-                    MuscleFloat += (maxMuscleValue / 15f) * (Time.deltaTime * sharedTimingData.Speed);
+                    //Adding the max value devided by a number means that it will take that number amount of seconds to complete
+                    MuscleFloat += (maxMuscleValue / 20f) * (Time.deltaTime * sharedTimingData.Speed);
                     if (TissueFloat < (maxTissueValue * 0.2f))
                     {
                         skinnedMeshRenderer.SetBlendShapeWeight(blendShapeIndex, TissueFloat * 100);
                         material.SetFloat("_MainSlider1", TissueFloat);
-                        TissueFloat += ((maxTissueValue * 0.2f) / 15f) * (Time.deltaTime * sharedTimingData.Speed);
+                        //Adding the max value, multiplied by a "percentage", devided by a number means we reach that percentage of the max number in the given amount of seconds.
+                        TissueFloat += ((maxTissueValue * 0.2f) / 20f) * (Time.deltaTime * sharedTimingData.Speed);
                         sharedTimingData.Contraction = TissueFloat;
                     }
                 }
@@ -67,7 +69,7 @@ public class CrossController : MonoBehaviour
                 {
                     skinnedMeshRenderer.SetBlendShapeWeight(blendShapeIndex, TissueFloat * 100);
                     material.SetFloat("_MainSlider1", TissueFloat);
-                    TissueFloat += (maxTissueValue / 10f) * (Time.deltaTime * sharedTimingData.Speed);
+                    TissueFloat += ((maxTissueValue * 0.8f) / 40f) * (Time.deltaTime * sharedTimingData.Speed);
                     sharedTimingData.Contraction = TissueFloat;
                 }
                 break;
@@ -76,7 +78,9 @@ public class CrossController : MonoBehaviour
                 if (MuscleFloat > 0)
                 {
                     material.SetFloat("_MainSlider2", MuscleFloat);
-                    MuscleFloat -= (1f / 100f) * (Time.deltaTime * sharedTimingData.Speed);
+                    //Same logic as earlier, but we subtract. So in this case, both take 10 seconds, to either reach 0 or to remove 10%
+                    MuscleFloat -= (maxMuscleValue / 10f) * (Time.deltaTime * sharedTimingData.Speed);
+                    TissueFloat += ((maxTissueValue * 0.1f) / 10f) * (Time.deltaTime * sharedTimingData.Speed);
                 }
                 else
                 {
@@ -89,8 +93,12 @@ public class CrossController : MonoBehaviour
                 {
                     skinnedMeshRenderer.SetBlendShapeWeight(blendShapeIndex, TissueFloat * 100);
                     material.SetFloat("_MainSlider1", TissueFloat);
-                    TissueFloat -= (1f / 100f) * (Time.deltaTime * sharedTimingData.Speed);
+                    TissueFloat -= ((maxTissueValue * 0.9f) / 28f) * (Time.deltaTime * sharedTimingData.Speed);
                     sharedTimingData.Contraction = TissueFloat;
+                }
+                else //TODO: Temoporary loop, remove before shipping
+                {
+                    sharedTimingData.Stage = 1;
                 }
                 break;
                 
