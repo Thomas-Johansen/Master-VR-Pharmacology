@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: SharedTimingData
   m_EditorClassIdentifier: 
   Speed: 0
-  Time: 92.3832
+  Time: 97.32801
   Stage: 4
-  Contraction: 1.0006818
+  Contraction: 1.0000639

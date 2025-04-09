@@ -32,13 +32,13 @@ public class CalendarController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (currentDay < 31)
+        if (currentDay < 7)
         {
             switch (timing)
             {
-                case < 3:
-                    _calendar[currentDay].color = Color.Lerp(Color.white, Color.red, (timing / 3));
-                    timing += Time.deltaTime;
+                case < 4:
+                    _calendar[currentDay].color = Color.Lerp(Color.white, Color.red, (timing / 4));
+                    timing += (Time.deltaTime * sharedTimingData.Speed);
                     break;
                 default:
                     timing = 0;

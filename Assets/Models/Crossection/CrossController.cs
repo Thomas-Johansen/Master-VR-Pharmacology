@@ -13,6 +13,7 @@ public class CrossController : MonoBehaviour
     
     //Timing variables
     public SharedTimingData sharedTimingData;
+    private float stageTimer;
     
     /*
      * Stages of animation:
@@ -96,12 +97,35 @@ public class CrossController : MonoBehaviour
                     TissueFloat -= ((maxTissueValue * 0.9f) / 28f) * (Time.deltaTime * sharedTimingData.Speed);
                     sharedTimingData.Contraction = TissueFloat;
                 }
-                else //TODO: Temoporary loop, remove before shipping
+                break;
+            case 9:
+                stageTimer += (Time.deltaTime * sharedTimingData.Speed);
+
+                if (stageTimer <= 10)
                 {
-                    sharedTimingData.Stage = 1;
+                    skinnedMeshRenderer.SetBlendShapeWeight(blendShapeIndex, TissueFloat * 100);
+                    material.SetFloat("_MainSlider1", TissueFloat);
+                    material.SetFloat("_MainSlider2", MuscleFloat);
+                    TissueFloat += ((maxTissueValue) / 10f) * (Time.deltaTime * sharedTimingData.Speed);
+                    MuscleFloat = TissueFloat * 0.2f;
+                    sharedTimingData.Contraction = TissueFloat;
+                } else if (stageTimer >= 10 && stageTimer <= 20)
+                {
+                    skinnedMeshRenderer.SetBlendShapeWeight(blendShapeIndex, TissueFloat * 100);
+                    material.SetFloat("_MainSlider1", TissueFloat);
+                    material.SetFloat("_MainSlider2", MuscleFloat);
+                    TissueFloat -= ((maxTissueValue) / 10f) * (Time.deltaTime * sharedTimingData.Speed);
+                    MuscleFloat = TissueFloat * 0.2f;
+                    sharedTimingData.Contraction = TissueFloat;
+                } else if (stageTimer >= 20 && stageTimer <= 22)
+                {
+                    
+                }
+                else
+                {
+                    stageTimer = 0;
                 }
                 break;
-                
         }
         
     }

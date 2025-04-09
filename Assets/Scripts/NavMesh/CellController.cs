@@ -9,7 +9,6 @@ using UnityEngine.VFX;
 /// </summary>
 public class CellController : MonoBehaviour
 {
-
     public GameObject CellLayer;
     public GameObject MedLayer;
     
@@ -177,10 +176,9 @@ public class CellController : MonoBehaviour
                 if (sharedTimingData.Time >= 100f)
                 {
                     MedLayer.SetActive(true);
-                    //CellLayer.SetActive(false); //TODO: Mention this issue? Revisit? 
                     obstacle.SetActive(false);
                     _individualCellTimer = 0;
-                    sharedTimingData.Stage = 5;
+                    sharedTimingData.Stage = 21; //Numbers over 20 reffer to button vaitings
                     
                 }
                 break;
@@ -215,7 +213,7 @@ public class CellController : MonoBehaviour
                     _cellTimeRatio = (28f / cellCount); //Devide time it should take on cells to go away. Maybe move to more centralized variable?
                 }
                 break;
-            case 7: //TODO: REMOVE BASED ON DISTANCE FROM CENTER
+            case 7:
                 sharedTimingData.Time += (Time.deltaTime * sharedTimingData.Speed);
                 _individualCellTimer += (Time.deltaTime * sharedTimingData.Speed);
                 _individualMedTimer += (Time.deltaTime * sharedTimingData.Speed);
@@ -271,10 +269,140 @@ public class CellController : MonoBehaviour
                 } else if (_particleBool == 7 && _individualMedTimer >= 4f)
                 {
                     _smokeEffect.Stop();
+                    _smokeBool = 0;
+                }
+
+                if (sharedTimingData.Contraction <= 0)
+                {
+                    sharedTimingData.Stage = 22; //Button case
+                    _individualCellTimer = 0;
+                    _individualMedTimer = 0;
+                    obstacle.SetActive(true);
+                    // Moves inner spawn radius in with the model
+                    minRadius = Mathf.Lerp(min_minRadius, max_minRadius, sharedTimingData.Contraction);
+                    //cells.Clear();
+                    //meds.Clear();
                 }
 
                 break;
+            case 8: //Keeps taking medicine
+                sharedTimingData.Time += (Time.deltaTime * sharedTimingData.Speed);
+                _individualCellTimer += (Time.deltaTime * sharedTimingData.Speed);
+                _individualMedTimer += (Time.deltaTime * sharedTimingData.Speed);
+                
+                if (_individualCellTimer >= 1 && _individualMedTimer < 5)
+                {
+                    //Adds cell furthest from center
+                    CellData cell = cells[0];
+                    float distance = 0f;
+                    foreach (CellData thisCell in cells)
+                    {
+                        if (!thisCell.cell.activeSelf)
+                        {
+                            float thisDistance = Vector3.Distance(centerPoint.position, thisCell.cell.transform.position);
+                            if (thisDistance > distance)
+                            {
+                                cell = thisCell;
+                                distance = thisDistance;
+                            }
+                        }
+                    }
+                    cell.cell.SetActive(true);
+                    _individualCellTimer = 0;
+                }
+                else if (_individualCellTimer >= 1 && _individualMedTimer >= 5)
+                {
+                    _individualCellTimer = 0;
+                    
+                    //Removes cell closest to center to avoid "floating" cells
+                    CellData cell = cells[0];
+                    float distance = 1000f; //Just a bigger number than max distance to a cell
+                    foreach (CellData thisCell in cells)
+                    {
+                        if (thisCell.cell.activeSelf)
+                        {
+                            float thisDistance = Vector3.Distance(centerPoint.position, thisCell.cell.transform.position);
+                            if (thisDistance < distance)
+                            {
+                                cell = thisCell;
+                                distance = thisDistance;
+                            }
+                        }
+                    }
+                    cell.cell.SetActive(false);
+                }
+                
+                if (_smokeBool == 0 && _individualMedTimer >= 4.25f)
+                {
+                    _smokeEffect.Play();
+                    _smokeBool = 1;
+                }
+                else if (_smokeBool == 1 && _individualMedTimer >= 5f)
+                {
+                    _smokeEffect.Stop();
+                    _smokeBool = 2;
+                }
 
+                if (_individualMedTimer >= 10.5f)
+                {
+                    _individualCellTimer = 0;
+                    _individualMedTimer = 0;
+                    _smokeBool = 0;
+                }
+                break;
+            case 9: //does not keep taking medisine
+                sharedTimingData.Time += (Time.deltaTime * sharedTimingData.Speed);
+                _individualCellTimer += (Time.deltaTime * sharedTimingData.Speed);
+                _individualMedTimer += (Time.deltaTime * sharedTimingData.Speed);
+                
+                // Moving spawn limits
+                if (_individualCellTimer >= 1 && _individualMedTimer <= 10)
+                {
+                    //Adds cell furthest from center
+                    CellData cell = cells[0];
+                    float distance = 0f;
+                    foreach (CellData thisCell in cells)
+                    {
+                        if (!thisCell.cell.activeSelf)
+                        {
+                            float thisDistance = Vector3.Distance(centerPoint.position, thisCell.cell.transform.position);
+                            if (thisDistance > distance)
+                            {
+                                cell = thisCell;
+                                distance = thisDistance;
+                            }
+                        }
+                    }
+                    cell.cell.SetActive(true);
+                    _individualCellTimer = 0;
+                } else if (_individualCellTimer >= 1 && _individualMedTimer >= 10)
+                {
+                    _individualCellTimer = 0;
+                    CellData cell = cells[0];
+                    float distance = 1000f; //Just a bigger number than max distance to a cell
+                    foreach (CellData thisCell in cells)
+                    {
+                        if (thisCell.cell.activeSelf)
+                        {
+                            float thisDistance = Vector3.Distance(centerPoint.position, thisCell.cell.transform.position);
+                            if (thisDistance < distance)
+                            {
+                                cell = thisCell;
+                                distance = thisDistance;
+                            }
+                        }
+                    }
+                    cell.cell.SetActive(false);
+                } else if (_individualMedTimer >= 22)
+                {
+                    _individualCellTimer = 0;
+                    _individualMedTimer = 0;
+                    sharedTimingData.Stage = 22;
+                }
+                
+
+                
+                break;
             default:
                 break;
         }
