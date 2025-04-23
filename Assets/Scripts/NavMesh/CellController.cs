@@ -103,12 +103,14 @@ public class CellController : MonoBehaviour
         switch (sharedTimingData.Stage)
         {
             case 0: //Stage 0: Temp location? Pause/Talking time before animation starts.
+                /*
                 _individualCellTimer += (Time.deltaTime * sharedTimingData.Speed);
                 if (_individualCellTimer >= 20)
                 {
                     _individualCellTimer = 0;
                     sharedTimingData.Stage = 1;
                 }
+                */
                 break;
             case 2:
                 // Stage 2: Some cells start to show up
@@ -173,7 +175,7 @@ public class CellController : MonoBehaviour
             case 4:
                 // Stage 4: Time update only
                 sharedTimingData.Time += (Time.deltaTime * sharedTimingData.Speed);
-                if (sharedTimingData.Time >= 100f)
+                if (sharedTimingData.Time >= 110f)
                 {
                     MedLayer.SetActive(true);
                     obstacle.SetActive(false);
@@ -274,7 +276,7 @@ public class CellController : MonoBehaviour
 
                 if (sharedTimingData.Contraction <= 0)
                 {
-                    sharedTimingData.Stage = 22; //Button case
+                    sharedTimingData.Stage = 9; //does not take
                     _individualCellTimer = 0;
                     _individualMedTimer = 0;
                     obstacle.SetActive(true);
@@ -356,7 +358,7 @@ public class CellController : MonoBehaviour
                 _individualMedTimer += (Time.deltaTime * sharedTimingData.Speed);
                 
                 // Moving spawn limits
-                if (_individualCellTimer >= 1 && _individualMedTimer <= 10)
+                if (_individualCellTimer >= 1 && _individualMedTimer <= 15)
                 {
                     //Adds cell furthest from center
                     CellData cell = cells[0];
@@ -375,7 +377,7 @@ public class CellController : MonoBehaviour
                     }
                     cell.cell.SetActive(true);
                     _individualCellTimer = 0;
-                } else if (_individualCellTimer >= 1 && _individualMedTimer >= 10)
+                } else if (_individualCellTimer >= 1 && _individualMedTimer >= 15)
                 {
                     _individualCellTimer = 0;
                     CellData cell = cells[0];
@@ -397,7 +399,7 @@ public class CellController : MonoBehaviour
                 {
                     _individualCellTimer = 0;
                     _individualMedTimer = 0;
-                    sharedTimingData.Stage = 22;
+                    sharedTimingData.Stage = 8;
                 }
                 
 

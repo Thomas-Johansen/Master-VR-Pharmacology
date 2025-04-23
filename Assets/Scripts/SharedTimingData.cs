@@ -41,6 +41,16 @@ public class SharedTimingData : ScriptableObject
     /// </summary>
     public float Contraction = 0;
     
+    
+    
+    /// <summary>
+    /// If the player is holding grab or not
+    /// </summary>
+    public bool IsGrabingLeft = false;
+    /// <summary>
+    /// If the player is holding grab or not
+    /// </summary>
+    public bool IsGrabingRight = false;
 
     void OnEnable()
     {

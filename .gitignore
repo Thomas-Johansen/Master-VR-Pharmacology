@@ -12,6 +12,7 @@
 
 #My ignores
 /[Aa]ssets/Models/Lungs2
+/[Aa]ssets/Models/Body
 /[Mm]aster-v1_BurstDebugInformation_DoNotShip
 
 

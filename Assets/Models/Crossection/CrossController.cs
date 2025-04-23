@@ -101,23 +101,23 @@ public class CrossController : MonoBehaviour
             case 9:
                 stageTimer += (Time.deltaTime * sharedTimingData.Speed);
 
-                if (stageTimer <= 10)
+                if (stageTimer <= 20)
                 {
                     skinnedMeshRenderer.SetBlendShapeWeight(blendShapeIndex, TissueFloat * 100);
                     material.SetFloat("_MainSlider1", TissueFloat);
                     material.SetFloat("_MainSlider2", MuscleFloat);
-                    TissueFloat += ((maxTissueValue) / 10f) * (Time.deltaTime * sharedTimingData.Speed);
+                    TissueFloat += ((maxTissueValue) / 15f) * (Time.deltaTime * sharedTimingData.Speed);
                     MuscleFloat = TissueFloat * 0.2f;
                     sharedTimingData.Contraction = TissueFloat;
-                } else if (stageTimer >= 10 && stageTimer <= 20)
+                } else if (stageTimer >= 20 && stageTimer <= 25)
                 {
                     skinnedMeshRenderer.SetBlendShapeWeight(blendShapeIndex, TissueFloat * 100);
                     material.SetFloat("_MainSlider1", TissueFloat);
                     material.SetFloat("_MainSlider2", MuscleFloat);
-                    TissueFloat -= ((maxTissueValue) / 10f) * (Time.deltaTime * sharedTimingData.Speed);
+                    TissueFloat -= ((maxTissueValue) / 5f) * (Time.deltaTime * sharedTimingData.Speed);
                     MuscleFloat = TissueFloat * 0.2f;
                     sharedTimingData.Contraction = TissueFloat;
-                } else if (stageTimer >= 20 && stageTimer <= 22)
+                } else if (stageTimer >= 25 && stageTimer <= 27)
                 {
                     
                 }

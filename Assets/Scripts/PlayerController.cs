@@ -1,3 +1,4 @@
+using Unity.XR.CoreUtils;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,6 +10,8 @@ public class PlayerController : MonoBehaviour
     public GameObject calendar;
     private bool hasActivated;
     
+    public GameObject playerCamera;
+    private XROrigin xOrigin;
     
     //Controller inputs
     [SerializeField] private InputActionAsset inputActions;
@@ -90,6 +93,10 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         calendar.SetActive(false);
+        //playerCamera.transform.position = (transform.position + Vector3.up * 0.8f);
+        xOrigin = playerCamera.GetComponent<XROrigin>();
+        xOrigin.MoveCameraToWorldLocation(transform.position + Vector3.up * 0.8f);
+
     }
 
     // Update is called once per frame
@@ -99,6 +106,11 @@ public class PlayerController : MonoBehaviour
         {
             hasActivated = true;
             calendar.SetActive(true);
+        }
+
+        if (sharedTimingData.Stage > 7)
+        {
+            calendar.SetActive(false);
         }
     }
     
@@ -116,11 +128,8 @@ public class PlayerController : MonoBehaviour
     private void OnRightPrimaryPerformed(InputAction.CallbackContext context)
     {
         _rightPrimary = true;
+        xOrigin.MoveCameraToWorldLocation(transform.position + Vector3.up * 0.8f);
         
-        if (sharedTimingData.Stage == 22)
-        {
-            sharedTimingData.Stage = 9;
-        }
     }
 
     private void OnRightPrimaryCanceled(InputAction.CallbackContext context)
@@ -131,14 +140,7 @@ public class PlayerController : MonoBehaviour
     private void OnRightSecondaryPerformed(InputAction.CallbackContext context)
     {
         _rightSecondary = true;
-        
-        if (sharedTimingData.Stage == 21)
-        {
-            sharedTimingData.Stage = 5;
-        } else if (sharedTimingData.Stage == 22)
-        {
-            sharedTimingData.Stage = 8;
-        }
+        xOrigin.MoveCameraToWorldLocation(transform.position + Vector3.up * 0.8f);
     }
 
     private void OnRightSecondaryCanceled(InputAction.CallbackContext context)
@@ -149,11 +151,13 @@ public class PlayerController : MonoBehaviour
     private void OnRightGrabPerformed(InputAction.CallbackContext context)
     {
         _rightGrab = true;
+        sharedTimingData.IsGrabingRight = true;
     }
     
     private void OnRightGrabCanceled(InputAction.CallbackContext context)
     {
         _rightGrab = false;
+        sharedTimingData.IsGrabingRight = false;
     }
     
     private void OnRightTriggerPerformed(InputAction.CallbackContext context)
@@ -211,11 +215,13 @@ public class PlayerController : MonoBehaviour
     private void OnLeftGrabPerformed(InputAction.CallbackContext context)
     {
         _leftGrab = true;
+        sharedTimingData.IsGrabingLeft = true;
     }
     
     private void OnLeftGrabCanceled(InputAction.CallbackContext context)
     {
         _leftGrab = false;
+        sharedTimingData.IsGrabingLeft = false;
     }
     
     private void OnLeftTriggerPerformed(InputAction.CallbackContext context)
