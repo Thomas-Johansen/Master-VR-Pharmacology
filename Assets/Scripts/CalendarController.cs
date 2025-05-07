@@ -32,7 +32,7 @@ public class CalendarController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (currentDay < 7)
+        if (currentDay < 31 && (sharedTimingData.Stage == 7 || sharedTimingData.Stage == 8))
         {
             switch (timing)
             {

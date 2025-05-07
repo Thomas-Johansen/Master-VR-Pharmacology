@@ -34,6 +34,8 @@ public class SharedTimingData : ScriptableObject
      * Stage 5: Medicine is administered
      * Stage 6: Quick acting medicine makes the muscle layer expand/return to original size.
      * Stage 7: Cells go away over time and tissue layer calms down.
+     * Stage 8: ENDING - Patient keeps taking medication
+     * Stage 9: Patient does not keep taking medication, loops back to 8
      */
     
     /// <summary>
@@ -51,6 +53,8 @@ public class SharedTimingData : ScriptableObject
     /// If the player is holding grab or not
     /// </summary>
     public bool IsGrabingRight = false;
+    
+    public bool IsPaused = false;
 
     void OnEnable()
     {

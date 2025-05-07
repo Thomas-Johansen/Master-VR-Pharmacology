@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
     
     public GameObject playerCamera;
     private XROrigin xOrigin;
+
+    public Vector3 resetPoint = new Vector3(-129.253006f, 727.590027f, 286.009003f);
     
     //Controller inputs
     [SerializeField] private InputActionAsset inputActions;
@@ -102,17 +104,49 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (sharedTimingData.Stage == 7 && !hasActivated)
+        if (sharedTimingData.Stage == 7 || sharedTimingData.Stage == 8)
         {
-            hasActivated = true;
             calendar.SetActive(true);
         }
 
-        if (sharedTimingData.Stage > 7)
+        if (sharedTimingData.Stage > 8 || sharedTimingData.Stage < 7)
         {
             calendar.SetActive(false);
         }
+        
+        
+        //Movement
+        Vector3 leftMovement = (playerCamera.transform.forward * _leftMoveVector.y + playerCamera.transform.right * _leftMoveVector.x );
+        Vector3 rightMovement = (playerCamera.transform.up * _rightMoveVector.y);
+        transform.position += (leftMovement + rightMovement) * Time.deltaTime;
     }
+
+
+    void DoPause()
+    {
+        transform.position += new Vector3(0, 0, 0);
+        if (sharedTimingData.Speed > 0)
+        {
+            storedSpeed = sharedTimingData.Speed;
+            sharedTimingData.Speed = 0;
+            sharedTimingData.IsPaused = true;
+        }
+        else
+        {
+            sharedTimingData.Speed = storedSpeed;
+            sharedTimingData.IsPaused = false;
+        }
+    }
+
+    void ResetPlayer()
+    {
+        xOrigin.MoveCameraToWorldLocation(transform.position + Vector3.up * 0.8f);
+        if (sharedTimingData.Stage >= 1)
+        {
+            transform.position = resetPoint;
+        }
+    }
+    
     
         //Right Hand
     private void OnRightMovementPerformed(InputAction.CallbackContext context)
@@ -128,8 +162,7 @@ public class PlayerController : MonoBehaviour
     private void OnRightPrimaryPerformed(InputAction.CallbackContext context)
     {
         _rightPrimary = true;
-        xOrigin.MoveCameraToWorldLocation(transform.position + Vector3.up * 0.8f);
-        
+        ResetPlayer();
     }
 
     private void OnRightPrimaryCanceled(InputAction.CallbackContext context)
@@ -140,7 +173,8 @@ public class PlayerController : MonoBehaviour
     private void OnRightSecondaryPerformed(InputAction.CallbackContext context)
     {
         _rightSecondary = true;
-        xOrigin.MoveCameraToWorldLocation(transform.position + Vector3.up * 0.8f);
+        ResetPlayer();
+        //DoPause();
     }
 
     private void OnRightSecondaryCanceled(InputAction.CallbackContext context)
@@ -163,11 +197,13 @@ public class PlayerController : MonoBehaviour
     private void OnRightTriggerPerformed(InputAction.CallbackContext context)
     {
         _rightTrigger = true;
+        sharedTimingData.IsGrabingRight = true;
     }
     
     private void OnRightTriggerCanceled(InputAction.CallbackContext context)
     {
         _rightTrigger = false;
+        sharedTimingData.IsGrabingRight = false;
     }
     
     //LeftHand
@@ -184,16 +220,7 @@ public class PlayerController : MonoBehaviour
     private void OnLeftPrimaryPerformed(InputAction.CallbackContext context)
     {
         _leftPrimary = true;
-        //TODO: Remember this is placed here
-        if (sharedTimingData.Speed >= 1)
-        {
-            sharedTimingData.Speed = 0;
-            storedSpeed = sharedTimingData.Speed;
-        }
-        else
-        {
-            sharedTimingData.Speed = storedSpeed;
-        }
+        DoPause();
     }
     
     private void OnLeftPrimaryCanceled(InputAction.CallbackContext context)
@@ -204,7 +231,7 @@ public class PlayerController : MonoBehaviour
     private void OnLeftSecondaryPerformed(InputAction.CallbackContext context)
     {
         _leftSecondary = true;
-
+        DoPause();
     }
     
     private void OnLeftSecondaryCanceled(InputAction.CallbackContext context)
@@ -227,12 +254,14 @@ public class PlayerController : MonoBehaviour
     private void OnLeftTriggerPerformed(InputAction.CallbackContext context)
     {
         _leftTrigger = true;
-        sharedTimingData.Speed = 5;
+       // sharedTimingData.Speed = 5;
+       sharedTimingData.IsGrabingLeft = true;
     }
     
     private void OnLeftTriggerCanceled(InputAction.CallbackContext context)
     {
         _leftTrigger = false;
-        sharedTimingData.Speed = 1;
+       // sharedTimingData.Speed = 1;
+       sharedTimingData.IsGrabingLeft = false;
     }
 }

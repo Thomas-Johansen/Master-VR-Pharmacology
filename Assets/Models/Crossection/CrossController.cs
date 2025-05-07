@@ -1,3 +1,4 @@
+using System.Net;
 using UnityEngine;
 
 public class CrossController : MonoBehaviour
@@ -106,7 +107,7 @@ public class CrossController : MonoBehaviour
                     skinnedMeshRenderer.SetBlendShapeWeight(blendShapeIndex, TissueFloat * 100);
                     material.SetFloat("_MainSlider1", TissueFloat);
                     material.SetFloat("_MainSlider2", MuscleFloat);
-                    TissueFloat += ((maxTissueValue) / 15f) * (Time.deltaTime * sharedTimingData.Speed);
+                    TissueFloat += ((maxTissueValue) / 20f) * (Time.deltaTime * sharedTimingData.Speed);
                     MuscleFloat = TissueFloat * 0.2f;
                     sharedTimingData.Contraction = TissueFloat;
                 } else if (stageTimer >= 20 && stageTimer <= 25)

@@ -9,21 +9,28 @@ public class Button2 : MonoBehaviour
     private GameObject camera;
     
     public GameObject rightHand;
+    public GameObject voicePart1;
     public GameObject voicePart2;
     
     
     private AudioSource audioSource;
+    private AudioSource voice1;
     private AudioSource voice2;
     
     private bool hasSpawned = false;
     private bool isEntered = false;
     private bool isPressed = false;
     private bool canFunction = false;
+    
+    
+    private bool startPause = true;
+    private bool endPause = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         mesh.SetActive(false);
         audioSource = GetComponent<AudioSource>();
+        voice1 = voicePart1.GetComponent<AudioSource>();
         voice2 = voicePart2.GetComponent<AudioSource>();
         camera = GameObject.Find("Main Camera");
     }
@@ -36,7 +43,7 @@ public class Button2 : MonoBehaviour
             if (!hasSpawned)
             {
                 mesh.SetActive(true);
-                transform.position = camera.transform.position + (camera.transform.forward * 0.30f);  //rightHand.transform.position + new Vector3(0, 0.1f, 0);
+                transform.position = camera.transform.position + (camera.transform.forward.normalized * 0.45f);  //rightHand.transform.position + new Vector3(0, 0.1f, 0);
                 canFunction = true;
                 hasSpawned = true;
             }
@@ -52,6 +59,36 @@ public class Button2 : MonoBehaviour
             }
             
             transform.right = transform.position - camera.transform.position;
+        }
+
+        if (sharedTimingData.IsPaused && startPause)
+        {
+            startPause = false;
+            endPause = true;
+
+            if (sharedTimingData.Stage < 5)
+            {
+                voice1.Pause();
+            }
+            else if (sharedTimingData.Stage < 10)
+            {
+                voice2.Pause();
+            }
+        }
+
+        if (!sharedTimingData.IsPaused && endPause)
+        {
+            endPause = false;
+            startPause = true;
+            
+            if (sharedTimingData.Stage < 5)
+            {
+                voice1.Play();
+            }
+            else if (sharedTimingData.Stage < 10)
+            {
+                voice2.Play();
+            }
         }
         
     }

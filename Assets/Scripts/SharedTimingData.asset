@@ -16,3 +16,6 @@ MonoBehaviour:
   Time: 0
   Stage: 0
   Contraction: 0
+  IsGrabingLeft: 0
+  IsGrabingRight: 0
+  IsPaused: 0

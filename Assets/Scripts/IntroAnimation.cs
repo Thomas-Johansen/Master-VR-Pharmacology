@@ -25,7 +25,7 @@ public class IntroAnimation : MonoBehaviour
     {
         if (timingData.Stage == 0)
         {
-            timer += Time.deltaTime;
+            timer += Time.deltaTime * timingData.Speed;
 
             if (timer <= 10)
             {

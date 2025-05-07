@@ -395,7 +395,7 @@ public class CellController : MonoBehaviour
                         }
                     }
                     cell.cell.SetActive(false);
-                } else if (_individualMedTimer >= 22)
+                } else if (_individualMedTimer >= 27)
                 {
                     _individualCellTimer = 0;
                     _individualMedTimer = 0;
@@ -471,8 +471,6 @@ public class CellController : MonoBehaviour
 
         return center;
     }
-    
-    
 }
 
 /// <summary>
